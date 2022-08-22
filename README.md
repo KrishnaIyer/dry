@@ -4,7 +4,7 @@ A collection of Golang helper functions.
 
 ## Contents
 
-1. `pkg/logger`; A highly opinionated wrapper around the [`zap`](https://github.com/uber-go/zap) logger.
+1. [`pkg/logger`](./pkg/logger/); A highly opinionated wrapper around the [`zap`](https://github.com/uber-go/zap) logger.
 
 ## License
 
