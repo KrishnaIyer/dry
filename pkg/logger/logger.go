@@ -62,6 +62,7 @@ func Fields(a ...any) (fields []zapcore.Field) {
 }
 
 // New creates a new logger. Make sure to call defer logger.Clean() after calling this.
+// Log messages are JSON Encoded and timestamps are RFC3339 encoded.
 func New(ctx context.Context, debug bool) (*Logger, error) {
 	config := zap.NewProductionConfig()
 	config.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
