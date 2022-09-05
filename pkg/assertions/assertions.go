@@ -23,7 +23,8 @@ import (
 )
 
 const (
-	IsNil = iota
+	IsNil    = "nil"
+	IsNotNil = "not-nil"
 )
 
 type Condition int
@@ -42,11 +43,16 @@ func New(t *testing.T) *Assertion {
 
 // Assert tests a condition.
 // If the condition is not met, the test will error and fail in-place.
-func (a *Assertion) Assert(condition int, actual, expected interface{}) bool {
+func (a *Assertion) Assert(condition string, actual interface{}, expected ...interface{}) bool {
 	switch condition {
 	case IsNil:
 		if !assert.Nil(a.t, actual) {
 			log.Fatalf("Expected nil, got %v", actual)
+			return false
+		}
+	case IsNotNil:
+		if !assert.NotNil(a.t, actual) {
+			log.Fatal("Expected value to not be nil, but it was!")
 			return false
 		}
 	default:
