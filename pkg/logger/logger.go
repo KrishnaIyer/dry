@@ -161,16 +161,20 @@ func field(key string, val interface{}) (field zapcore.Field) {
 	return
 }
 
-// WithField returns a logger with the provided field.
+// WithField returns a new logger with the provided field.
 func (l *Logger) WithField(key string, val interface{}) *Logger {
-	l.fields = append(l.fields, field(key, val))
-	return l
+	return &Logger{
+		ctx:    l.ctx,
+		logger: l.logger,
+		fields: append(l.fields, field(key, val)),
+	}
 }
 
 // WithFields returns a logger with the providedfields.
 func (l *Logger) WithFields(f []zapcore.Field) *Logger {
-	for _, f := range f {
-		l.fields = append(l.fields, f)
+	return &Logger{
+		ctx:    l.ctx,
+		logger: l.logger,
+		fields: append(l.fields, f...),
 	}
-	return l
 }
