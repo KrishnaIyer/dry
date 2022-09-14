@@ -59,6 +59,9 @@ func (mgr *Manager) Unmarshal(config interface{}) error {
 	decoder, err := mapstructure.NewDecoder(&mapstructure.DecoderConfig{
 		TagName: "name",
 		Result:  config,
+		DecodeHook: mapstructure.ComposeDecodeHookFunc(
+			stringSliceToStringMapHookFunc,
+		),
 	})
 	if err != nil {
 		return err
@@ -99,6 +102,9 @@ func (mgr *Manager) parseStructToFlags(prefix string, strT reflect.Type) {
 		case reflect.Struct:
 			// This allows for recursion
 			mgr.parseStructToFlags(name, field.Type)
+		case reflect.Map:
+			mgr.flags.StringSliceP(name, short, nil, desc)
+
 		default:
 			panic(fmt.Errorf("Unknown type in config: %v", kind))
 		}
