@@ -31,9 +31,9 @@ func New(name string) *Manager {
 	}
 }
 
-// AddConfigFlag adds the config flag to the root flagset.
-func (mgr *Manager) AddConfigFlag(root *pflag.FlagSet) {
-	root.StringP("config", "c", "./config.yml", "config file (Default; config.yml in the current directory)")
+// AddConfigFlag adds the config flag to the persistent root flagset.
+func (mgr *Manager) AddConfigFlag(persistentFlags *pflag.FlagSet) {
+	persistentFlags.StringP("config", "c", "./config.yml", "config file (Default; config.yml in the current directory)")
 }
 
 // ReadFromFile reads the config from the file set with the `config` flag.
