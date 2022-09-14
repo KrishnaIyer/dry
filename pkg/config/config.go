@@ -31,6 +31,22 @@ func New(name string) *Manager {
 	}
 }
 
+// AddConfigFlag adds the config flag to the root flagset.
+func (mgr *Manager) AddConfigFlag(root *pflag.FlagSet) {
+	root.StringP("config", "c", "", "config file (Default; config.yml in the current directory)")
+}
+
+// ReadFromFile reads the config from the file set with the `config` flag.
+// Use `AddConfigFlag` to add the config flag to the root flagset.
+func (mgr *Manager) ReadFromFile() error {
+	configFile := mgr.flags.Lookup("config").Value.String()
+	if configFile != "" {
+		mgr.viper.SetConfigFile(configFile)
+		return mgr.viper.ReadInConfig()
+	}
+	return nil
+}
+
 // InitFlags initializes the flagset with the provided config.
 func (mgr *Manager) InitFlags(cfg any) error {
 	rootStruct := reflect.TypeOf(cfg)
