@@ -108,8 +108,8 @@ func NewContextWithLogger(parentCtx context.Context, logger *Logger) context.Con
 	return context.WithValue(parentCtx, loggerKey, logger)
 }
 
-// NewLoggerFromContext retrieves a logger from a context and panics if there isn't one.
-func NewLoggerFromContext(ctx context.Context) *Logger {
+// LoggerFromContext retrieves a logger from a context and panics if there isn't one.
+func LoggerFromContext(ctx context.Context) *Logger {
 	val := ctx.Value(loggerKey)
 	logger, ok := val.(*Logger)
 	if !ok {
