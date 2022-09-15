@@ -4,6 +4,7 @@ package config
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/pflag"
@@ -20,9 +21,11 @@ type Manager struct {
 // New returns a new initialized manager with the given config.
 func New(name string) *Manager {
 	viper := viper.New()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
 	viper.AllowEmptyEnv(true)
-	viper.AutomaticEnv()
+	viper.SetEnvPrefix(name)
 	viper.SetConfigName(name)
+	viper.AutomaticEnv()
 
 	return &Manager{
 		name:  name,
@@ -42,7 +45,7 @@ func (mgr *Manager) ReadFromFile(fs *pflag.FlagSet) error {
 	configFile, _ := fs.GetString("config")
 	if configFile != "" {
 		mgr.viper.SetConfigFile(configFile)
-		return mgr.viper.ReadInConfig()
+		return mgr.viper.MergeInConfig()
 	}
 	return nil
 }
