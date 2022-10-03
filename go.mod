@@ -1,4 +1,4 @@
-module go.krishnaiyer.dev/dry
+module krishnaiyer.dev/golang/dry
 
 go 1.18
 
