@@ -170,6 +170,15 @@ func (l *Logger) WithField(key string, val interface{}) *Logger {
 	}
 }
 
+// WithError returns a new logger with the provided error.
+func (l *Logger) WithError(err error) *Logger {
+	return &Logger{
+		ctx:    l.ctx,
+		logger: l.logger,
+		fields: append(l.fields, zap.Error(err)),
+	}
+}
+
 // WithFields returns a logger with the providedfields.
 func (l *Logger) WithFields(f []zapcore.Field) *Logger {
 	return &Logger{
