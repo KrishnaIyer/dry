@@ -118,6 +118,18 @@ func (mgr *Manager) parseStructToFlags(prefix string, strT reflect.Type) {
 			mgr.flags.StringP(name, short, "", desc)
 		case reflect.Bool:
 			mgr.flags.BoolP(name, short, false, desc)
+		case reflect.Uint:
+			mgr.flags.UintP(name, short, 0, desc)
+		case reflect.Uint64:
+			mgr.flags.Uint64P(name, short, 0, desc)
+		case reflect.Int:
+			mgr.flags.IntP(name, short, 0, desc)
+		case reflect.Int64:
+			mgr.flags.Int64P(name, short, 0, desc)
+		case reflect.Float64:
+			mgr.flags.Float64P(name, short, 0, desc)
+		case reflect.Slice:
+			mgr.flags.StringSliceP(name, short, nil, desc)
 		case reflect.Struct:
 			// This allows for recursion
 			mgr.parseStructToFlags(name, field.Type)
