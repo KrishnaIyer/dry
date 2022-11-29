@@ -1,5 +1,5 @@
 name: test
-on: 
+on:
   push:
     paths:
       - '**.go'
@@ -9,10 +9,10 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.14
+    - name: Set up Go 1.19
       uses: actions/setup-go@v1
       with:
-        go-version: '1.14'
+        go-version: '1.19'
     - name: Check out code
       uses: actions/checkout@v2
     - name: Run package tests
